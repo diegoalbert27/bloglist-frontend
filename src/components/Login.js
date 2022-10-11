@@ -1,6 +1,7 @@
 import { useState } from "react"
 import loginService from "../services/login"
 import Notification from "./Notification"
+import blogService from '../services/blogs'
 
 const Login = ({ handleUser }) => {
   const [username, setUsername] = useState('')
@@ -22,6 +23,8 @@ const Login = ({ handleUser }) => {
       setPassword('')
   
       handleUser(response)
+      
+      blogService.setToken(response.token)
       window.localStorage.setItem('loggedBloglistUser', JSON.stringify(response))
     } catch (exception) {
       setType('error')
