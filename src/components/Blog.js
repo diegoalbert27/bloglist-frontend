@@ -13,6 +13,8 @@ const Blog = ({ blog, addNewLike, removeBlog }) => {
     marginBottom: 5
   }
 
+  const labelButton = visible ? 'hide' : 'view'
+
   const handleLike = () => {
     addNewLike(blog)
   }
@@ -26,12 +28,12 @@ const Blog = ({ blog, addNewLike, removeBlog }) => {
   }
 
   return (
-    <div>
-      <div style={blogStyle}>
-        {blog.title} {blog.author}
-        <button onClick={() => setVisible(!visible)}>view</button>
+    <div style={blogStyle}>
+      <div className='blog-title'>
+        {blog.title} by {blog.author}
+        <button onClick={() => setVisible(!visible)}>{labelButton}</button>
       </div>
-      <div style={{ ...blogStyle, display: visible ? '' : 'none' }}>
+      <div className='blog-details' style={{ display: visible ? '' : 'none' }}>
         {blog.url}
         <br />
         Likes {blog.likes} <button onClick={handleLike}>like</button>

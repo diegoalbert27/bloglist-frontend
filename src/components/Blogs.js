@@ -57,8 +57,6 @@ const Blogs = ({ user, handleUser }) => {
         likes: blog.likes + 1
       }
 
-      await blogService.update(blog.id, updateBlog)
-
       const index = blogs.findIndex(blog => blog.id === updateBlog.id)
       blogs[index].likes = updateBlog.likes
 
@@ -71,6 +69,8 @@ const Blogs = ({ user, handleUser }) => {
         setType('')
         setMessage(null)
       }, 5000)
+
+      await blogService.update(blog.id, updateBlog)
     } catch (exception) {
       console.log(exception)
     }
@@ -78,13 +78,13 @@ const Blogs = ({ user, handleUser }) => {
 
   const removeBlog = async (blog) => {
     try {
-      await blogService.remove(blog.id)
-
       const newBlogs = blogs.filter(currentBlog => currentBlog.id !== blog.id)
-      setBlogs(newBlogs)
 
+      setBlogs(newBlogs)
       setType('success')
       setMessage(`${blog.title} by ${blog.author} removed`)
+
+      await blogService.remove(blog.id)
 
       setTimeout(() => {
         setType('')
